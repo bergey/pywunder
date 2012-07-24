@@ -7,9 +7,8 @@ import datetime
 
 def get_temperature_data(airport, date):
     url = get_url(airport, date.year, date.month, date.day)
-    proxy_handler = urllib2.ProxyHandler({'http': 'http://user:pass@proxy.domain.com:3128'})
 
-    opener = urllib2.build_opener(proxy_handler)
+    opener = urllib2.build_opener()
 
     data = []
 
@@ -18,18 +17,11 @@ def get_temperature_data(airport, date):
     for row in reader:
         if len(row) > 1:
             # print row[0], row[1]
-            try:
-                time = datetime.datetime.strptime(row[0],"%I:%M %p")
-                dt = datetime.datetime.combine(date.date(), time.time()) 
-                temp = float(row[1])
-                # print dt, temp
-                data.append({'time':dt, 'temperature':temp})
-            except ValueError, e:
-                # ignore parsing errors
-                pass
-            except Exception, e:
-                print e
-                raise
+            time = datetime.datetime.strptime(row[0],"%I:%M %p")
+            dt = datetime.datetime.combine(date.date(), time.time()) 
+            temp = float(row[1])
+            # print dt, temp
+            data.append({'time':dt, 'temperature':temp})
 
     return data
 
