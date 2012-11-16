@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib.dates import datestr2num
 import re
 from functional import compose
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def br_strip(str):
     return re.sub(r'<.*$', '', str)
@@ -59,7 +59,7 @@ def interval_weather(airport, start, stop):
     if stop < start:
         raise ReversedRange
     opener = urllib2.build_opener()
-    day = datetime(1970,1,2) - datetime(1970,1,1)
+    day = timedelta(1)
     d = start
     ws = []
     while d<stop:
