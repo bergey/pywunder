@@ -43,7 +43,7 @@ def day_weather(airport, date, opener=None):
 
     f = opener.open(url)
 
-    print(date.strftime("parsing %Y-%m-%d")
+    print(date.strftime("parsing %Y-%m-%d"))
     return np.loadtxt(f,
                       skiprows=2,
                       delimiter=',',
