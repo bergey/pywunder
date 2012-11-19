@@ -6,6 +6,7 @@ from matplotlib.dates import datestr2num
 import re
 from functional import compose
 from datetime import datetime, timedelta
+import sys
 
 def br_strip(str):
     return re.sub(r'<.*$', '', str)
@@ -43,7 +44,6 @@ def day_weather(airport, date, opener=None):
 
     f = opener.open(url)
 
-    print(date.strftime("parsing %Y-%m-%d"))
     return np.loadtxt(f,
                       skiprows=2,
                       delimiter=',',
@@ -63,6 +63,9 @@ def interval_weather(airport, start, stop):
     d = start
     ws = []
     while d<stop:
+        sys.stdout.write(d.strftime("parsing %Y-%m-%d"))
+        sys.stdout.flush()
+        sys.stdout.write("\b"*18) # return cursor to start of line
         ws.append(day_weather(airport, d, opener))
         d += day
     
